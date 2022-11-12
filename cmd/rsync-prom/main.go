@@ -13,7 +13,7 @@ import (
 	"os/exec"
 	"syscall"
 
-	"github.com/stapelberg/rsyncprom"
+	"github.com/jonasekl/rsyncprom"
 )
 
 func rsyncprommain() error {
@@ -23,7 +23,7 @@ func rsyncprommain() error {
 	}
 	var params rsyncprom.WrapParams
 	flag.StringVar(&params.Pushgateway, "prometheus_push_gateway",
-		"https://pushgateway.ts.zekjur.net",
+		"http://pushgateway.metrics.bca",
 		"URL for the https://github.com/prometheus/pushgateway service to push Prometheus metrics to")
 	flag.StringVar(&params.Instance, "instance",
 		"rsync@"+hostname,

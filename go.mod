@@ -1,4 +1,4 @@
-module github.com/stapelberg/rsyncprom
+module github.com/jonasekl/rsyncprom
 
 go 1.17
 
