@@ -13,6 +13,13 @@ This allows you to then build dashboards and alerting for your rsync batch jobs.
 go install github.com/stapelberg/rsyncprom/cmd/rsync-prom@latest
 ```
 
+## Build
+```shell
+GOOS=linux GOARCH=amd64 go build -o rsync-prom-linux-amd64
+GOOS=linux GOARCH=arm64 go build -o rsync-prom-linux-arm64
+
+```
+
 ## Setup example: crontab
 
 ```
