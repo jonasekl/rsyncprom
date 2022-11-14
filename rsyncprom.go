@@ -3,7 +3,7 @@
 //
 // This package contains the parser, see cmd/rsync-prom for a wrapper program.
 //
-// Rsync Requirements
+// # Rsync Requirements
 //
 // Start rsync with --verbose (-v) or --stats to enable printing transfer
 // totals.
@@ -80,7 +80,14 @@ func WrapRsync(ctx context.Context, params *WrapParams, args []string, start fun
 		})
 		exitCodeMetric.Set(float64(exitCode))
 		// end timestamp is push_time_seconds
-		pushAll(exitCodeMetric)
+
+		endTimeMetric := prometheus.NewGauge(prometheus.GaugeOpts{
+			Name: params.Job + "_end_timestamp_seconds",
+			Help: "The timestamp of the rsync end",
+		})
+		endTimeMetric.SetToCurrentTime()
+
+		pushAll(exitCodeMetric, endTimeMetric)
 	}()
 
 	rd, err := start(ctx, args)
