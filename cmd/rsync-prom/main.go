@@ -16,6 +16,14 @@ import (
 	"github.com/jonasekl/rsyncprom"
 )
 
+func GetEnvOrDefault(key, defaultVal string) string {
+	val := os.Getenv(key)
+	if len(val) == 0 {
+		return defaultVal
+	}
+	return val
+}
+
 func rsyncprommain() error {
 	hostname, err := os.Hostname()
 	if err != nil {
@@ -23,13 +31,13 @@ func rsyncprommain() error {
 	}
 	var params rsyncprom.WrapParams
 	flag.StringVar(&params.Pushgateway, "prometheus_push_gateway",
-		"http://pushgateway.metrics.bca",
+		GetEnvOrDefault("PUSHGATEWAY", "http://pushgateway.metrics.bca"),
 		"URL for the https://github.com/prometheus/pushgateway service to push Prometheus metrics to")
 	flag.StringVar(&params.Instance, "instance",
-		"rsync@"+hostname,
+		GetEnvOrDefault("INSTANCE", "rsync@"+hostname),
 		"prometheus instance label. should be as descriptive as possible")
 	flag.StringVar(&params.Job, "job",
-		"rsync",
+		GetEnvOrDefault("JOB", "rsync"),
 		"prometheus job label")
 	exit24IsExit0 := flag.Bool("exit_24_is_exit_0",
 		false,
